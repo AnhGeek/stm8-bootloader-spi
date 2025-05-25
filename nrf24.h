@@ -54,7 +54,6 @@
 #define NRF24_FEATURE_EN_DYN_ACK        (1 << 0)
 #define NRF24_FEATURE_EN_DPL            (1 << 2)
 
-          
 #define NRF24_R_REGISTER        0x00
 #define NRF24_W_REGISTER        0x20
 #define NRF24_REGISTER_MASK     0x1F
@@ -69,7 +68,7 @@
 
 extern uint8_t nrf_write_cmd(uint8_t cmd);
 extern uint8_t nrf_detect(void);
-uint8_t nrf_init(uint8_t channel);
+void nrf_init(uint8_t channel);
 void nrf_sendpayload(uint8_t *data, uint8_t len);
 uint8_t nrf_read_register(uint8_t regNo);
 void nrf_write_addr(uint8_t a, const uint8_t* data, uint8_t len);

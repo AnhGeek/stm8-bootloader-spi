@@ -2,6 +2,7 @@
 #include "config.h"
 #include "stm8.h"
 #include "ram.h"
+#include "nrf24.h"
 
 static uint8_t CRC = 0x00;
 static uint8_t ivt[128];
@@ -9,6 +10,7 @@ static uint8_t f_ram1[128];
 static uint8_t f_ram2[128];
 static uint8_t rx_buffer[BLOCK_SIZE];
 static volatile uint8_t RAM_SEG_LEN;
+const uint8_t pipe[] = {0xE7, 0xE7, 0xE7, 0xE7, 0xE7};
 static void (*flash_write_block)(uint16_t addr, const uint8_t *buf) =
         (void (*)(uint16_t, const uint8_t *)) f_ram1;
 static void (*write_rop_byte)(uint16_t addr, const uint8_t opt) =
@@ -348,7 +350,10 @@ void bootloader_main() {
         /* execute bootloader */
         CLK_CKDIVR = 0;
         ram_cpy();
-        uart_init();
+        // Init, open channel 10
+        nrf_init(RF_CHANNEL);
+        // Open pipe, with maximum length address 5
+        nrf_openWritingPipe(pipe);
         bootloader_enter();
     } else {
         /* jump to application */

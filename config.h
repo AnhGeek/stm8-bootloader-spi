@@ -50,5 +50,6 @@
 #define UART_CR2            *(&UART_SR + 0x05)
 #define UART_CR2_TEN        3
 #define UART_CR2_REN        2
+#define RF_CHANNEL          10
 
 #endif /* CONFIG_H */
